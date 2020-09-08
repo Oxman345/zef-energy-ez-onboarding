@@ -7,7 +7,6 @@ import site from './siteReducer';
 import device from './newDevice';
 import breaker from './breakerReducer';
 import allDevice from './allDeviceReducer';
-import zefUser from './zefUserReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -24,7 +23,6 @@ const rootReducer = combineReducers({
   device,//will have a site, breaker, name, serial number
   breaker,
   allDevice, //will have some giant heccin device objects ya
-  zefUser,
 });
 
 export default rootReducer;

@@ -20,124 +20,120 @@ import DeviceSerial from "../Device/DeviceSerial";
 import DeviceName from "../Device/DeviceName";
 import DevicePrep from "../Device/DevicePrep";
 import BreakerSelect from "../Device/Breaker/Select";
-import {
-  CssBaseline,
-  MuiThemeProvider,
-  createMuiTheme,
-  Grid,
-} from "@material-ui/core";
+import { CssBaseline, MuiThemeProvider, createMuiTheme, Grid } from '@material-ui/core';
 import DeviceReview from "../Device/DeviceReview";
-import AddUser from "../AddUser/AddUser";
-import { indigo, yellow, green } from "@material-ui/core/colors";
-import "./App.css";
-import Submit from "../Submit/Submit";
-import Completed from "../Submit/Completed";
+import AddUser from "../AddUser/AddUser"
+import { indigo,yellow, green,} from '@material-ui/core/colors';
+import './App.css';
+import Submit from '../Submit/Submit';
+import Completed from '../Submit/Completed';
 
 const theme = createMuiTheme({
-  palette: {
+  palette:{
     primary: indigo,
     secondary: yellow,
-    success: green,
-  },
-});
+    success: green, 
+  }
+  
+})
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: "FETCH_USER" });
   }
 
+
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme = {theme}>
         <Router>
-          <CssBaseline />
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            className="background"
-          >
-            <div>
-              <Switch>
-                {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-                <Redirect exact from="/" to="/home" />
+         <CssBaseline/>
+          <Grid container justify='center' alignItems='center' className='background'>
+          <div>
+            <Switch>
+              {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
+              <Redirect exact from="/" to="/home" />
 
-                <ProtectedRoute exact path="/home" component={WelcomeScreen} />
+              <ProtectedRoute exact path="/home" component={WelcomeScreen} />
 
-                <ProtectedRoute
-                  exact
-                  path="/organizationHome"
-                  component={OrganizationHomeScreen}
-                />
+              <ProtectedRoute
+                exact
+                path="/organizationHome"
+                component={OrganizationHomeScreen}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/createOrganization"
-                  component={CreateOrganization}
-                />
-                <ProtectedRoute exact path="/home" component={WelcomeScreen} />
-                <ProtectedRoute
-                  exact
-                  path="/hostSelect"
-                  component={HostSelect}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/editOrganization"
-                  component={EditOrganization}
-                />
+              <ProtectedRoute
+                exact
+                path="/createOrganization"
+                component={CreateOrganization}
+              />
+              <ProtectedRoute exact path="/home" component={WelcomeScreen} />
+              <ProtectedRoute exact path="/hostSelect" component={HostSelect} />
+              <ProtectedRoute
+                exact
+                path="/editOrganization"
+                component={EditOrganization}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/viewOrganization"
-                  component={ViewOrganization}
-                />
+              <ProtectedRoute
+                exact
+                path="/viewOrganization"
+                component={ViewOrganization}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/devicePrep"
-                  component={DevicePrep}
-                />
+              <ProtectedRoute
+              exact
+              path="/devicePrep"
+              component={DevicePrep}
+            />
 
-                <ProtectedRoute
-                  exact
-                  path="/deviceType"
-                  component={DeviceSelectType}
-                />
+              <ProtectedRoute
+                exact
+                path="/deviceType"
+                component={DeviceSelectType}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/deviceSerial"
-                  component={DeviceSerial}
-                />
+              <ProtectedRoute
+                exact
+                path="/deviceSerial"
+                component={DeviceSerial}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/deviceName"
-                  component={DeviceName}
-                />
+              <ProtectedRoute exact path="/deviceName" component={DeviceName} />
 
-                <ProtectedRoute
-                  exact
-                  path="/breakerSelect"
-                  component={BreakerSelect}
-                />
+              <ProtectedRoute
+                exact
+                path="/breakerSelect"
+                component={BreakerSelect}
+              />
 
-                <ProtectedRoute
-                  exact
-                  path="/deviceReview"
-                  component={DeviceReview}
-                />
+              <ProtectedRoute
+                exact
+                path="/deviceReview"
+                component={DeviceReview}
+              />
 
-                <ProtectedRoute exact path="/addUser" component={AddUser} />
+              <ProtectedRoute
+                exact
+                path="/addUser"
+                component={AddUser}
+              />
 
-                <ProtectedRoute exact path="/submit" component={Submit} />
-                <ProtectedRoute exact path="/completed" component={Completed} />
+              <ProtectedRoute
+                exact
+                path="/submit"
+                component={Submit}
+              />
+              <ProtectedRoute
+                exact
+                path="/completed"
+                component={Completed}
+              />
 
-                {/* If none of the other routes matched, we will show a 404. */}
-                <Route render={() => <h1>404</h1>} />
-              </Switch>
-            </div>
+              {/* If none of the other routes matched, we will show a 404. */}
+              <Route render={() => <h1>404</h1>} />
+            </Switch>
+          </div>
           </Grid>
         </Router>
       </MuiThemeProvider>

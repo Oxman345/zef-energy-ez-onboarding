@@ -1,52 +1,26 @@
-const express = require("express");
-const pool = require("../modules/pool");
+const express = require('express');
+const pool = require('../modules/pool');
 const router = express.Router();
-const {
-  rejectUnauthenticated,
-} = require("../modules/authentication-middleware");
+const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 
-
-router.get("/:id", rejectUnauthenticated, (req, res) => {
-    console.log('in /api/add-user req.params.id:',req.params.id);
-    const queryString = `SELECT * FROM "zefnet_user" WHERE "organization_id" = $1;`;
-    const postValues = [
-      req.params.id,
-    ];
-    pool
-      .query(queryString, postValues)
-      .then((result) => {
-        res.send(result.rows);
-        console.log(result.rows);
-      })
-      .catch((error) => {
-        res.sendStatus(500);
-        console.log("error on POST /api/add-user/", error);
-      });
-  });
-
-
-router.post("/", rejectUnauthenticated, (req, res) => {
-//   console.log(req.body);
-  const queryString = `INSERT INTO "zefnet_user"
+router.post('/', rejectUnauthenticated, (req, res) => {
+    const queryString = `INSERT INTO "zefnet_user"
     ("first_name", "last_name", "email", "phone", "editor", "organization_id")
     VALUES($1, $2, $3, $4, $5, $6);`;
-  const postValues = [
-    req.body.fname,
-    req.body.lname,
-    req.body.email,
-    req.body.phone,
-    req.body.editor,
-    req.body.orgId,
-  ];
-  pool
-    .query(queryString, postValues)
-    .then(() => {
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-      console.log("error on POST /api/add-user/", error);
-    });
+    const postValues = [
+        req.body.fname,
+        req.body.lname,
+        req.body.email,
+        req.body.phone,
+        req.body.editor,
+        req.body.orgId,
+    ]
+    pool.query(queryString, postValues)
+    .then(()=>{res.sendStatus(201)})
+    .catch((error)=>{
+     res.sendStatus(500)
+     console.log( 'error on POST /api/addUser/', error);
+   })
 });
 
 module.exports = router;

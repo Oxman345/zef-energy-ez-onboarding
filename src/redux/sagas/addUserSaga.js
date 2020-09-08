@@ -3,30 +3,16 @@ import { put, takeLatest } from "redux-saga/effects";
 
 function* addUser(action) {
   try {
-      console.log( "====> In addUser Saga", action.payload)
-    const response = yield axios.post("/api/add-user", action.payload);
-    // yield console.log("In addUser", response.data);
-    yield put ({ type: 'FETCH_ZEFUSER', payload: action.payload.orgId})
+    const response = yield axios.post("/api/user", action.payload);
+    yield console.log("In addUser", response.data.id);
+    // yield put({ type: "FETCH_ORGANIZATION", payload: response.data.id });
   } catch (error) {
     console.log("Trouble adding User", error);
   }
 }
 
-function* fetchZefUser(action) {
-    try {
-        console.log( "====> in fetchZefUser Saga", action.payload)
-    //   const postObject = {orgId: action.payload}
-      const response = yield axios.get(`/api/add-user/${action.payload}`);
-      console.log('back from get /api/add-user with:', response)
-      yield put ({ type: 'SET_ZEFUSER', payload: response.data})
-    } catch (error) {
-      console.log("Trouble getting users", error);
-    }
-  }
-
-function* addUserSaga() {
+function* addOrganizationSaga() {
   yield takeLatest("ADD_USER", addUser);
-  yield takeLatest("FETCH_ZEFUSER", fetchZefUser)
 }
 
-export default addUserSaga;
+export default addOrganizationSaga;

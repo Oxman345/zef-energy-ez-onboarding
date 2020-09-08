@@ -9,15 +9,9 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
   withStyles,
 } from "@material-ui/core";
-import { ChevronLeft, Delete, Edit } from "@material-ui/icons";
-import IconButton from "@material-ui/core/IconButton";
+import { ChevronLeft } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -36,7 +30,7 @@ class AddUser extends Component {
     lname: "",
     email: "",
     phone: "",
-    editor: "",
+    privileges: "",
   };
 
   handleInputChangeFor = (propertyName) => (event) => {
@@ -51,26 +45,19 @@ class AddUser extends Component {
       this.state.lname &&
       this.state.email &&
       this.state.phone &&
-      this.state.editor !== ""
+      this.state.privileges !== ""
     ) {
       const actionObject = {
         fname: this.state.fname,
         lname: this.state.lname,
         email: this.state.email,
         phone: this.state.phone,
-        editor: this.state.editor,
+        privileges: this.state.privileges,
         orgId: this.props.reduxState.organization.id,
       };
       console.log(actionObject);
       // Double check the type
       this.props.dispatch({ type: "ADD_USER", payload: actionObject });
-      this.setState({
-        fname: "",
-        lname: "",
-        email: "",
-        phone: "",
-        editor: "",
-      });
     } else {
       alert("enter required information");
     }
@@ -80,6 +67,7 @@ class AddUser extends Component {
     const { classes } = this.props;
 
     let centerText = {
+      // paddingLeft: "15px",
       textAlign: "center",
       color: "black",
       fontFamily: "Crimson Text, Open Sans, sans-serif",
@@ -104,7 +92,8 @@ class AddUser extends Component {
     };
 
     let textFields = {
-      width: "200px",
+      fontFamily: "Crimson Text",
+      minWidth: "100px",
       margin: "5px",
     };
 
@@ -119,7 +108,7 @@ class AddUser extends Component {
           minWidth: "100vw",
         }}
       >
-        <Grid item xs={8} align="center">
+        <Grid item xs={8} style={{ maxWidth: "1000px" }} align="center">
           <Paper className={classes.paper} elevation={3}>
             <div style={header}>
               <div style={centerText}>
@@ -132,39 +121,6 @@ class AddUser extends Component {
                   </h3>
                 </div>
               </div>
-            </div>
-            <div>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell> </TableCell>
-                    <TableCell>First Name</TableCell>
-                    <TableCell>Last Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Phone</TableCell>
-                    <TableCell>Privileges</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {this.props.reduxState.zefUser.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        <IconButton>
-                          <Edit />
-                        </IconButton>
-                        <IconButton>
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell>{user.first_name}</TableCell>
-                      <TableCell>{user.last_name}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.phone}</TableCell>
-                      <TableCell>{user.editor ? "Edit" : "View"}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
             </div>
             <form
               style={{
@@ -183,55 +139,76 @@ class AddUser extends Component {
                   color="secondary"
                   style={textFields}
                   label="First Name:"
+                  margin="normal"
                   variant="outlined"
-                  value={this.state.fname}
+                  value={this.state.fname || ""}
                   onChange={this.handleInputChangeFor("fname")}
                 />
               </div>
               <div>
                 <TextField
-                  required
                   color="secondary"
+                  required
                   style={textFields}
-                  label="Last Name:"
+                  label="Last Name"
+                  margin="normal"
                   variant="outlined"
-                  value={this.state.lname}
+                  value={this.state.lname || ""}
                   onChange={this.handleInputChangeFor("lname")}
                 />
               </div>
               <div>
                 <TextField
-                  required
                   color="secondary"
+                  required
                   style={textFields}
-                  label="Email:"
+                  label="Email"
+                  margin="normal"
                   variant="outlined"
-                  value={this.state.email}
+                  value={this.state.email || ""}
                   onChange={this.handleInputChangeFor("email")}
                 />
               </div>
               <div>
                 <TextField
-                  required
                   color="secondary"
+                  required
                   style={textFields}
-                  label="Phone:"
+                  label="Phone"
+                  margin="normal"
                   variant="outlined"
                   value={this.state.phone || ""}
                   onChange={this.handleInputChangeFor("phone")}
                 />
               </div>
               <div>
+                {/* <Select
+                  color="secondary"
+                  required
+                  style={textFields}
+                  label="Privileges"
+                  margin="normal"
+                  variant="outlined"
+                  value={this.state.privileges}
+                  onChange={this.handleInputChangeFor("privileges")}
+                /> */}
                 <FormControl variant="outlined">
-                  <InputLabel>Privileges:</InputLabel>
+                  <InputLabel>Choose From Existing</InputLabel>
                   <Select
-                    required
-                    onChange={this.handleInputChangeFor("editor")}
-                    style={textFields}
-                    value={this.state.editor || ""}
+                    value={this.state.selectedPrivileges || ""}
+                    onChange={this.handleChange}
+                    label="Breaker"
                   >
-                    <MenuItem value="False">View</MenuItem>
-                    <MenuItem value="True">Edit</MenuItem>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {/*Map out all breakers stored in reducer*/}
+
+                    {/* {
+                                    this.state.breakers.map((breaker, index)=>
+                                    <MenuItem value={breaker} key={breaker.id}>
+                                        <span style={{backgroundColor: '#b2ff59'}}>Amps:{breaker.limit} </span> {breaker.name}</MenuItem>
+                                )} */}
                   </Select>
                 </FormControl>
               </div>
